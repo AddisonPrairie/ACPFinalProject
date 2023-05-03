@@ -4,7 +4,7 @@
 CXX = g++
 
 #SDL2 includes and library linking
-SDL2 = -I ../ACPFinalProject/SDL2/include -L ../ACPFinalProject/SDL2/lib/x86 -lSDL2main -lSDL2
+SDL2 = -I ../ACPFinalProject/SDL2/include -L ../ACPFinalProject/SDL2/lib/x86 -l SDL2main.lib -l SDL2.lib
 
 main: main.cpp
-	$(CXX) main.cpp $(SDL2)  -o main
+	$(CXX) $(SDL2) main.cpp -o main
