@@ -11,6 +11,7 @@
 #include "headers/scene.h"
 #include "headers/tileQueue.h"
 #include "headers/renderThread.h"
+#include "headers/lambertian.h"
 
 #include "glm/glm.hpp"
 #include "glm/vec3.hpp"
@@ -51,7 +52,9 @@ int main(int argc, char* argv[]) {
     Scene scene = Scene();
     for (int i = 0; i < 20; i++) {
         float r = .1 + frand1() * .2;
-        Sphere* sphere = new Sphere(glm::vec3(frand1() - .5, frand1() - .5, frand1() - .5), r);
+        Sphere* sphere = new Sphere(glm::vec3(frand1() - .5, frand1() - .5, frand1() - .5), r,
+            new Lambertian(glm::vec3(frand1(), frand1(), frand1()))
+        );
         scene.addObjectToScene(sphere);
     }
 

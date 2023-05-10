@@ -1,22 +1,27 @@
 #include "../headers/sphere.h"
+#include "../headers/lambertian.h"
 #include <iostream>
 //default constructor - unit sphere at origin
 Sphere::Sphere() {
     position = glm::vec3(0.);
     radius = 1.;
+    this->material = new Lambertian(glm::vec3(.5, .5, .5));
 }
 //constructor that takes a position
 Sphere::Sphere(glm::vec3 position) {
     this->position = position;
+    this->material = new Lambertian(glm::vec3(.5, .5, .5));
 }
 //full constructor takes a position and radius
-Sphere::Sphere(glm::vec3 position, float radius) {
+Sphere::Sphere(glm::vec3 position, float radius, Material* material) {
     this->position = position; this->radius = radius;
+    this->material = material;
 }
 
 //ray-sphere intersection function
 RayHit Sphere::intersect(Ray& ray) {
     RayHit returned; returned.bHit = false;
+    returned.material = this->material;
 
     float t0, t1; 
 
