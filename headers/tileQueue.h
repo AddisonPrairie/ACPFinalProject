@@ -12,6 +12,7 @@ class TileQueue {
     public:
         QNode* root;
         std::mutex queueLock;
+        int numTiles;
         //default constructor
         TileQueue(int tileX, int tileY, int screenX, int screenY);
         //gets the next available tile

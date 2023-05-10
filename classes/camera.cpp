@@ -11,12 +11,12 @@ Camera::Camera(int screenX, int screenY, float pinholeDistance, glm::vec3 positi
     aspectRatio =  ((float) this->screenX) / ((float) this->screenY);
 }
 //gets the ray information for a given pixel
-Ray Camera::getRayForPixel(int pixelX, int pixelY) {
+Ray Camera::getRayForPixel(float pixelX, float pixelY) {
     Ray returned;
     //find the rays position along the right and up vectors
-    float xAmt = ((float) pixelX) / ((float) screenX) - .5;
+    float xAmt = (pixelX) / ((float) screenX) - .5;
     xAmt *= aspectRatio;
-    float yAmt =  .5 - ((float) pixelY) / ((float) screenY);
+    float yAmt =  .5 - (pixelY) / ((float) screenY);
     glm::vec3 target = position + xAmt * right + yAmt * up + pinholeOrigin;
     //find the rays direction
     returned.direction = glm::normalize(target - this->position);

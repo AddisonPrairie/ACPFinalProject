@@ -4,6 +4,9 @@
 #include "../glm/vec3.hpp"
 #include <cstdlib>
 
+
+#define PI 3.14159265358979323846f
+
 inline float fabs(float x) {return x < 0 ? -x : x;}
 inline float fclamp(float a, float min, float max) {
     if (a < min) return min;

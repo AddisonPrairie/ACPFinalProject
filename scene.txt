@@ -1,0 +1,5 @@
+material mat1 lambertian, .5, .5, .5
+
+sphere 0., 0., 0., 1., mat1
+
+

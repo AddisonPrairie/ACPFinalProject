@@ -38,10 +38,10 @@ int main(int argc, char* argv[]) {
     if (!bSuccess) return 0;
 
     glm::vec3 forward; glm::vec3 right;
-    float zRotation = 0.; float fRotation = 0.;
+    float zRotation = 0.; float fRotation = -.4;
 
     Camera::generateForwardAndRightFromAngles(zRotation, fRotation, forward, right);
-    Camera mainCamera = Camera(INIT_WIDTH, INIT_HEIGHT, 1., forward * (-5.f), forward, right);
+    Camera mainCamera = Camera(INIT_WIDTH, INIT_HEIGHT, 1., forward * (-2.f), forward, right);
     mainCamera.printInfo();
 
     //get the pixel array for the main surface to edit later
@@ -49,22 +49,22 @@ int main(int argc, char* argv[]) {
 
     //temporary - generate a random scene of 40 spheres
     Scene scene = Scene();
-    for (int i = 0; i < 1; i++) {
-        float r = 1.;
-        Sphere* sphere = new Sphere(glm::vec3(0., 0., i), r);
+    for (int i = 0; i < 20; i++) {
+        float r = .1 + frand1() * .2;
+        Sphere* sphere = new Sphere(glm::vec3(frand1() - .5, frand1() - .5, frand1() - .5), r);
         scene.addObjectToScene(sphere);
     }
 
     auto start = std::chrono::high_resolution_clock::now();
 
     //create the rendering tile queue
-    TileQueue* tileQueue = new TileQueue(150, 150, INIT_WIDTH, INIT_HEIGHT);
+    TileQueue* tileQueue = new TileQueue(50, 50, INIT_WIDTH, INIT_HEIGHT);
 
     int numThreads = 16;
     std::thread** threadArr = (std::thread**) malloc(sizeof(std::thread*) * numThreads);
 
     for (int i = 0; i < numThreads; i++) {
-        threadArr[i] = new std::thread(threadFunc, pixels, INIT_WIDTH, INIT_HEIGHT, &mainCamera, &scene, tileQueue);
+        threadArr[i] = new std::thread(threadFunc, i, pixels, INIT_WIDTH, INIT_HEIGHT, &mainCamera, &scene, tileQueue);
     }
 
     for (int i = 0; i < numThreads; i++) {
@@ -82,6 +82,7 @@ int main(int argc, char* argv[]) {
     //main loop - keeps window open
     bool bQuit = false; SDL_Event currentEvent;
     while (!bQuit) {
+        SDL_UpdateWindowSurface(mainWindow);
         while (SDL_PollEvent(&currentEvent) != 0) {
             if (currentEvent.type == SDL_QUIT) {
                 bQuit = true;

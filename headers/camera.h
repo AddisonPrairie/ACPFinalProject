@@ -12,7 +12,7 @@ class Camera {
         //construct a camera
         Camera(int screenX, int screenY, float pinholeDistance, glm::vec3 position, glm::vec3 forward, glm::vec3 right);
         //gets the ray information for a given pixel
-        Ray getRayForPixel(int pixelX, int pixelY);
+        Ray getRayForPixel(float pixelX, float pixelY);
         //function to print the information about this camera
         void printInfo();
         //static function to generate necessary vectors from two angles
