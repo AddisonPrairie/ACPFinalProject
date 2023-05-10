@@ -2,6 +2,8 @@
 #include "../glm/vec3.hpp"
 #include "shared.h"
 
+#pragma once
+
 class Material;
 //the class that all objects in the scene inherit from
 class Object {

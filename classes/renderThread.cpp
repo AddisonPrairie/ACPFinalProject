@@ -5,6 +5,7 @@
 #include "../headers/tile.h"
 #include "../headers/tileQueue.h"
 #include "../headers/material.h"
+#include "../headers/emissive.h"
 
 #include "../glm/glm.hpp"
 #include "../glm/vec3.hpp"
@@ -20,17 +21,21 @@ glm::vec3 sample(Camera* camera, Scene* scene, int x, int y) {
         //if we hit the sky
         if (!hit.bHit) {
             bFoundLight = true;
+            throughput *= glm::vec3(.1, .1, .1);
             break;
         }
 
         Material* currentMaterial = hit.material;
 
+        if (currentMaterial->bEmissive) {
+            bFoundLight = true;
+            throughput *= ((Emissive*)currentMaterial)->color;
+            break;
+        }
+
         glm::vec3 brdf, wi; float pdf;
 
         currentMaterial->sample_f(-currentRay.direction, wi, pdf, brdf);
-
-        //lambertian bsdf / pdf
-        //glm::vec3 bsdf = glm::vec3(.5, 0.5, 0.5) / PI; float pdf = 1. / (2. * PI);
 
         //get a world-space random hemisphere sample around the hit normal
         glm::vec3 o1;
@@ -53,7 +58,7 @@ glm::vec3 sample(Camera* camera, Scene* scene, int x, int y) {
         throughput *= brdf * glm::abs(glm::dot(hit.hitNormal, currentRay.direction)) / pdf;
 
         //terminate path by russian roulette
-        if (bounces > 2) {
+        if (bounces > 3) {
             float q = std::max(.05f, 1.f - throughput.y);
             if (frand1() < q) break;
             throughput /= 1.f - q;
@@ -89,7 +94,7 @@ void threadFunc(
         //draw the color of every one of those pixels
         for (int x = nextTile->xLow; x < nextTile->xHigh; x++) {
             for (int y = nextTile->yLow; y < nextTile->yHigh; y++) {
-                int numSamples = 100;
+                int numSamples = 1024;
                 glm::vec3 sumSamples = glm::vec3(0.);
                 for (int i = 0; i < numSamples; i++) {
                     sumSamples += sample(camera, scene, x, y);
