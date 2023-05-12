@@ -94,7 +94,7 @@ void threadFunc(
         //draw the color of every one of those pixels
         for (int x = nextTile->xLow; x < nextTile->xHigh; x++) {
             for (int y = nextTile->yLow; y < nextTile->yHigh; y++) {
-                int numSamples = 1024;
+                int numSamples = 50;
                 glm::vec3 sumSamples = glm::vec3(0.);
                 for (int i = 0; i < numSamples; i++) {
                     sumSamples += sample(camera, scene, x, y);
