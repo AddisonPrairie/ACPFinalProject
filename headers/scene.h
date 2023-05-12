@@ -18,4 +18,6 @@ class Scene {
         void addObjectToScene(Object* object);
         //intersects a ray with the entire scene
         RayHit intersect(Ray& in);
+        //cleans up objects
+        ~Scene();
 };

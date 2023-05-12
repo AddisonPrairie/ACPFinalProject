@@ -47,3 +47,17 @@ RayHit Scene::intersect(Ray& in) {
 
     return returned;
 }
+
+//cleans up objects
+Scene::~Scene(){
+    Node* x = rootNode;
+    if(x->next != NULL){
+        Node* y = x->next;
+        while(y != NULL){
+            delete(x->object);
+            x = y;
+            y = y->next;
+        }
+    }
+    delete(x->object);
+}

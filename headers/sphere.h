@@ -17,6 +17,8 @@ class Sphere : public Object {
         Sphere(glm::vec3 position);
         //full constructor takes a position and radius
         Sphere(glm::vec3 position, float radius, Material* material);
+        //full constructor takes position floats and radius
+        Sphere(float x, float y, float z, float radius, Material* material);
 
         //the ray-primitive intersection function for this sphere
         RayHit intersect(Ray& ray) override;

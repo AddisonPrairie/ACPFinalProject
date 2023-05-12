@@ -3,8 +3,20 @@
 #include "../glm/vec2.hpp"
 #include <iostream>
 
+Lambertian::Lambertian(){
+    this->color = glm::vec3(0, 0, 0);
+}
+
 Lambertian::Lambertian(glm::vec3 color) {
     this->color = color;
+}
+
+void Lambertian::setColor(glm::vec3 color){
+    this->color = color;
+}
+
+void Lambertian::setColor(float a, float b, float c){
+    this->color = glm::vec3(a, b, c);
 }
 
 //generates a random sample about a hemisphere

@@ -18,6 +18,13 @@ Sphere::Sphere(glm::vec3 position, float radius, Material* material) {
     this->material = material;
 }
 
+//full constructor takes position floats and radius
+Sphere::Sphere(float x, float y, float z, float radius, Material* material) {
+    position = glm::vec3(x, y, z);
+    this->position = position; this->radius = radius;
+    this->material = material;
+}
+
 //ray-sphere intersection function
 RayHit Sphere::intersect(Ray& ray) {
     RayHit returned; returned.bHit = false;
