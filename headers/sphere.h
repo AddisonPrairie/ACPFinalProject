@@ -5,6 +5,8 @@
 
 #pragma once
 
+class Material;
+
 class Sphere : public Object {
     public: 
         float radius;
@@ -14,7 +16,7 @@ class Sphere : public Object {
         //constructor that takes a position
         Sphere(glm::vec3 position);
         //full constructor takes a position and radius
-        Sphere(glm::vec3 position, float radius);
+        Sphere(glm::vec3 position, float radius, Material* material);
 
         //the ray-primitive intersection function for this sphere
         RayHit intersect(Ray& ray) override;
